@@ -1,10 +1,10 @@
-# assignment-0-install
+# assignment-1-blind-search
 
 # TASK 2
 
-
-
 # TESTS
 
+Collaborators (if any):
 
-Collaborators:
+AI Use Description:
+You must acknowledge use here and submit transcript if AI was used for portions of the assignment
