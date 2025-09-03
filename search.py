@@ -3,6 +3,11 @@ from queue import Queue
 from search_problem import SearchProblem, State
 from maze import Maze
 
+class PathNotFoundError(Exception):
+    def __init__(self, message="Path not found"):
+        self.message = message
+        super().__init__(self.message)
+        
 def bfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str, int]]:
     """
     Performs Breadth-First Search (BFS) on the given problem.
@@ -20,7 +25,7 @@ def bfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
     """
     # TODO: Update these values
     stats = {"path_length": 0, "states_expanded": 0, "max_frontier_size": 0} 
-    
+    raise PathNotFoundError
     pass
 
 def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str, int]]:
@@ -40,7 +45,7 @@ def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
     """
     # TODO: Update these values
     stats = {"path_length": 0, "states_expanded": 0, "max_frontier_size": 0}
-    
+    raise PathNotFoundError
     pass
 
 def reconstruct_path(path: Dict[State, State], end: State, problem: SearchProblem[State]) -> List[State]:
