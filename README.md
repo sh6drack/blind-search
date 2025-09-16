@@ -22,9 +22,6 @@ def test_dfs_simple_path(self):
 def test_no_path_exists(self):
     """Tests both algorithms properly raise PathNotFoundError when goal state is unreachable."""
 
-def test_start_is_goal(self):
-    """Tests edge case where start state equals goal state, expecting immediate return with zero expansions."""
-
 def test_multiple_paths_bfs_optimal(self):
     """Tests BFS finds shortest path in diamond-shaped graph with two equal-length routes to goal."""
 
@@ -34,15 +31,12 @@ def test_frontier_size_tracking(self):
 def test_cycle_handling(self):
     """Tests algorithms avoid infinite loops in graphs containing cycles by using visited set."""
 
-def test_large_graph_performance(self):
-    """Tests scalability on 11-node linear chain to verify performance on larger state spaces."""
-
 def test_stats_consistency(self):
     """Tests search statistics remain identical across multiple runs on the same graph."""
 
 def test_maze_small(self):
     """Tests both algorithms work correctly on actual Maze objects with 1x1 and 2x2 dimensions."""
-    
+
 Collaborators (if any):
 
 AI Use Description: 

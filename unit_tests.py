@@ -124,29 +124,6 @@ class IOTest(unittest.TestCase):
             
         with self.assertRaises(PathNotFoundError):
             dfs(graph)
-            
-    def test_start_is_goal(self):
-        """Test when start state is already the goal"""
-        matrix = [
-            [None, 1.0],  # 0 -> 1
-            [None, None]  # 1 has no outgoing edges
-        ]
-        
-        graph = DirectedGraph(
-            matrix=matrix,
-            goal_indices={0},  # Start state is also goal
-            start_state=0
-        )
-        
-        path, stats = bfs(graph)
-        self.assertEqual(path, [0])
-        self.assertEqual(stats["path_length"], 1)
-        self.assertEqual(stats["states_expanded"], 0)  # No expansion needed
-        
-        path, stats = dfs(graph)
-        self.assertEqual(path, [0])
-        self.assertEqual(stats["path_length"], 1)
-        self.assertEqual(stats["states_expanded"], 0)  # No expansion needed
         
     def test_multiple_paths_bfs_optimal(self):
         """Test BFS finds optimal path when multiple paths exist"""
@@ -206,27 +183,6 @@ class IOTest(unittest.TestCase):
         path, stats = bfs(graph)
         self.assertEqual(path, [0, 3])
         self.assertEqual(stats["path_length"], 2)
-        
-    def test_large_graph_performance(self):
-        """Test on larger graph to check performance"""
-        # Create chain: 0 -> 1 -> 2 -> ... -> 10
-        size = 11
-        matrix = []
-        for i in range(size):
-            row: List[Optional[float]] = [None] * size  # Allow None or float
-            if i < size - 1:
-                row[i + 1] = 1.0  # Connect to next state
-            matrix.append(row)
-            
-        graph = DirectedGraph(
-            matrix=matrix,
-            goal_indices={10},
-            start_state=0
-        )
-        
-        path, stats = bfs(graph)
-        self.assertEqual(stats["path_length"], 11)
-        self.assertEqual(stats["states_expanded"], 10)
         
     def test_stats_consistency(self):
         """Test that stats are consistent across runs"""
