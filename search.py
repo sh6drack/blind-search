@@ -112,14 +112,16 @@ def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
         # get next state from the frontier
         current_state = frontier.pop()
 
+        # increment states expanded here 
+        stats["states_expanded"] += 1
+
         # check if we've reached goal
         if problem.is_goal_state(current_state):
             path = reconstruct_path(parent, current_state, problem)
             stats["path_length"] = len(path)
             return path, stats
         
-        # increment states expanded here 
-        stats["states_expanded"] += 1
+        
 
         successors = problem.get_successors(current_state)
 
