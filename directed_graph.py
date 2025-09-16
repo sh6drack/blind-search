@@ -42,10 +42,10 @@ class DirectedGraph(SearchProblem[int]):
 
     def get_successors(self, state):
         row = self.matrix[state]
-        successors = {}
+        successors = set()
         index = 0
         for cost in row:
-            if not (cost == None):
-                successors[index] = cost
+            if cost is not None:
+                successors.add(index)
             index += 1
         return successors

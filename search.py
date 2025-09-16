@@ -26,7 +26,7 @@ def bfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
 
     stats = {"path_length": 0, "states_expanded": 0, "max_frontier_size": 0}
 
-    # init queue with start state
+        # Initialize queue with start state
     frontier = Queue()
     start_state = problem.get_start_state()
     frontier.put(start_state)
@@ -39,34 +39,35 @@ def bfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
     parent = {}
     parent[start_state] = None
 
-    #track max frontier size
+    # track max frontier size
     stats["max_frontier_size"] = 1
 
     while not frontier.empty():
-        #update max frontier sie
+        # update max frontier size
         current_frontier_size = frontier.qsize()
-
         stats["max_frontier_size"] = max(stats["max_frontier_size"], current_frontier_size)
 
-        #get next state from the frontier
+        # get next state from the frontier
         current_state = frontier.get()
 
-        #check if weve reached  goal
-
+        # check if we've reached goal
         if problem.is_goal_state(current_state):
             path = reconstruct_path(parent, current_state, problem)
             stats["path_length"] = len(path)
             return path, stats
+
+        # increment states expanded here 
         stats["states_expanded"] += 1
 
-        for successor_data in problem.get_successors(current_state):
-            successor = successor_data[0] if isinstance(successor_data, tuple) else successor_data
+        successors = problem.get_successors(current_state)
+
+        for successor in successors:  # Can iterate directly over the set
             if successor not in visited:
                 visited.add(successor)
                 parent[successor] = current_state
                 frontier.put(successor)
 
-    raise PathNotFoundError("no path found from start to goal state")
+    raise PathNotFoundError("No path found from start to goal state")
 
 def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str, int]]:
     """
@@ -85,7 +86,7 @@ def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
     """
     stats = {"path_length": 0, "states_expanded": 0, "max_frontier_size": 0}
 
-    # init stack with start state
+    # intiialize stack with start state
     frontier = []
     start_state = problem.get_start_state()
     frontier.append(start_state)
@@ -115,18 +116,18 @@ def dfs(problem: SearchProblem[State]) -> Tuple[Optional[List[State]], Dict[str,
             stats["path_length"] = len(path)
             return path, stats
         
-        # increment states expanded counter
+        # increment states expanded here 
         stats["states_expanded"] += 1
 
-        for successor_data in problem.get_successors(current_state):
-            successor = successor_data[0] if isinstance(successor_data, tuple) else successor_data
+        successors = problem.get_successors(current_state)
+
+        for successor in successors:  # Can iterate directly over the set
             if successor not in visited:
                 visited.add(successor)
                 parent[successor] = current_state
                 frontier.append(successor)
 
-    raise PathNotFoundError("no path found from start to goal state")
-
+    raise PathNotFoundError("No path found from start to goal state")
 
 def reconstruct_path(path: Dict[State, State], end: State, problem: SearchProblem[State]) -> List[State]:
     """
